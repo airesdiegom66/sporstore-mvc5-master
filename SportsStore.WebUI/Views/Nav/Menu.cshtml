@@ -1,0 +1,27 @@
+﻿@*To create the view for the Menu action method, right-click on the Views/Nav folder and select Add ➤ MVC 5 View Page (Razor) from the pop-up menu.
+    Set the name to Menu and click the OK button to create the Menu.cshtml file. Remove the contents that Visual Studio adds to new views and set the content to match*@
+@model IEnumerable<string>
+
+<div>
+    @Html.ActionLink("Home", "List", "Product", null, new
+    {
+        @class = "btn btn-block btn-default btn-lg"
+    + (null == ViewBag.SelectedCategory ? " btn-primary" : "")
+    })
+
+    @foreach (var link in Model)
+    {
+        @Html.RouteLink(link, new
+        {
+            action = "List",
+            controller = "Product",
+            category = link,
+            page = 1
+        },
+            new
+            {
+                @class = "btn btn-block btn-default btn-lg"
+                + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
+            })
+    }
+</div>

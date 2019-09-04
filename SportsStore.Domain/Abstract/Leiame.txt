@@ -1,0 +1,5 @@
+﻿I need some way of getting Product entities from a database. 
+As I explained in Chapter 3, the model includes the persistence logic for storing and retrieving the data from the persistent data store, 
+but even within the model, I want to keep a degree of separation between the data model entities and the storage and retrieval logic, 
+which I achieve using the repository pattern. 
+I will not worry about how I am going to implement data persistence for the moment, but I will start the process of defining an interface for it. 

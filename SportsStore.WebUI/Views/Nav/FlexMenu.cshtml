@@ -1,0 +1,39 @@
+﻿
+@model IEnumerable<string>
+
+@{ bool horizontal = ((bool)(ViewContext.RouteData.Values["horizontalLayout"] ?? false));
+    string wrapperClasses = horizontal ? "btn-group btn-group-sm btn-group-justified" : null;
+}
+
+<div class="@wrapperClasses">
+    @Html.ActionLink("Home", "List", "Product", null,
+                        new
+                        {
+                            @class = horizontal ? "btn btn-default btn-sm" : "btn btn-block btn-default btn-lg"
+                        })
+
+    @foreach (var link in Model)
+    {
+        @Html.RouteLink(link, new
+        {
+            controller = "Product",
+            action = "List",
+            category = link,
+            page = 1
+        }, new
+        {
+            @class = (horizontal ? "btn btn-default btn-sm" : "btn btn-block btn-default btn-lg") + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
+        })
+    }
+</div>
+@*The cost of removing duplication is a more complex view that can generate both orientations of buttons and it is a matter of personal preference as to which approach you take.
+    If you are like me and prefer to avoid duplication, then this listing shows several useful features you can apply to views.
+    The first is the ability to access routing information directly from the view. The ViewContext property provides information about the current state of the request
+    that is being processed, including details of the routing information, as follows:
+
+    bool horizontal = ((bool)(ViewContext.RouteData.Values["horizontalLayout"] ?? false));
+
+    The second feature is the ability to create local variables within a view.
+    This is possible because of the way that Razor views are compiled into classes (which I describe in Chapter 20), and
+    I have created a local variable called horizontal that means I don’t have to check the route data throughout the listing to
+    figure out which orientation the view is being used for.*@

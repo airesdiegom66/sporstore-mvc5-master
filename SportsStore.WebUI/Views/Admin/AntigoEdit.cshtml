@@ -1,0 +1,65 @@
+﻿@model SportsStore.Domain.Entities.Product
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Admin: Edit " + @Model.Name;
+
+
+    //In most situations, client - side validation is a useful feature, but if for some reason you do not want to validate at the client,
+    //you need to add the following statements to the view:
+    //HtmlHelper.ClientValidationEnabled = false;
+    //HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+}
+
+@*<h1>Edit @Model.Name</h1>*@
+
+@*Instead of writing out markup for each of the labels and inputs by hand, I have called the Html.EditorForModel helper method.
+    This method asks the MVC Framework to create the editing interface for me, which it does by inspecting the model type—in this case, the Product class.*@
+
+@*@using (Html.BeginForm())
+    {
+        @Html.EditorForModel()
+        <input type="submit" value="Save" />
+        @Html.ActionLink("Cancel and return to List", "Index")
+    }*@
+
+@*Versão 2*@
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Edit @Model.Name</h3>
+    </div>
+    @*Now the form will always be posted to the Edit action, regardless of which action rendered it.
+        I can now create products by clicking the Add a new product link and filling in the details*@
+    @using (Html.BeginForm("Edit", "Admin"))
+    {
+        {
+            <div class="panel-body">
+                @Html.HiddenFor(m => m.ProductID)
+
+                @foreach (var property in ViewData.ModelMetadata.Properties)
+                {
+                    if (property.PropertyName != "ProductID")
+                    {
+                        <div class="form-group">
+                            <label>@(property.DisplayName ?? property.PropertyName)</label>
+                            @if (property.PropertyName == "Description")
+                            {
+                                @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 })
+                            }
+                            else
+                            {
+                                @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                            }
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                    }
+                }
+            </div>
+            <div class="panel-footer">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Cancel and return to List", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        }
+    }
+</div> 

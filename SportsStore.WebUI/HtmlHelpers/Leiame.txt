@@ -1,0 +1,5 @@
+﻿An extension method is available for use only when the namespace that contains it is in scope. In a code file, 
+this is done with a using statement; but for a Razor view, you must add a configuration entry to the Web.config file, 
+or add a @using statement to the view itself. There are, confusingly, two Web.config files in a Razor MVC project: the main one, 
+which resides in the root directory of the application project, and the view-specific one, which is in the Views folder. 
+The change I want to make is to the Views/web.config.
